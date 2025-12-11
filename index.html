@@ -10,16 +10,80 @@
 </head>
 <body>
 
-<div class="container" id="mainContainer">
+<header>
+    <h1>📊 Оқытушыларды бағалау</h1>
+    <p class="subtitle">Әділ және заманауи жүйе</p>
+</header>
 
-    <!-- QR беті -->
-    <div id="qrCard">
-        <h1>📱 QR код арқылы кіру</h1>
+<div class="container">
+
+    <!-- 1-бет: QR код -->
+    <div class="card" id="qrCard">
+        <h2>QR кодты сканерлеңіз</h2>
         <canvas id="qrcode"></canvas>
-
         <div id="entryCard" class="hidden">
-            <a href="?user=student1" class="entryBtn">Оқушы ретінде кіру</a>
-            <a href="?user=parent1" class="entryBtn">Ата-ана ретінде кіру</a>
+            <a href="?user=student1" class="entryBtn">Оқушы</a>
+            <a href="?user=parent1" class="entryBtn">Ата-ана</a>
+        </div>
+    </div>
+
+    <!-- 2-бет: Student View -->
+    <div id="studentView" class="hidden">
+        <div class="card">
+            <h2>Оқытушыны бағалау</h2>
+            <label>Оқытушыны таңда:</label>
+            <select id="teacher"></select>
+
+            <label>Сабақтың түсініктілігі:</label>
+            <input type="range" min="1" max="5" value="3" class="slider" id="clarity">
+
+            <label>Сабақ қызықтылығы:</label>
+            <input type="range" min="1" max="5" value="3" class="slider" id="interest">
+
+            <label>Мұғалімнің қолжетімділігі:</label>
+            <input type="range" min="1" max="5" value="3" class="slider" id="accessibility">
+
+            <label>Қатысу белсенділігі:</label>
+            <input type="range" min="1" max="5" value="3" class="slider" id="participation">
+
+            <div class="emoji-rating">
+                <h3>Сабақ әсері:</h3>
+                <div class="emojis">
+                    <span data-value="1">😡</span>
+                    <span data-value="2">😕</span>
+                    <span data-value="3">😐</span>
+                    <span data-value="4">😊</span>
+                    <span data-value="5">🤩</span>
+                </div>
+            </div>
+
+            <div class="comment-box">
+                <h3>Пікір қалдыру:</h3>
+                <textarea id="comment" placeholder="Пікіріңізді жазыңыз..."></textarea>
+            </div>
+
+            <button id="submit">Бағалау жіберу</button>
+        </div>
+    </div>
+
+    <!-- 3-бет: Parent View -->
+    <div id="parentView" class="hidden">
+        <div class="card">
+            <h2>Оқытушылар рейтингі</h2>
+            <select id="teacherParentSelect"></select>
+            <div class="teacher-profile">
+                <h3 id="parentTeacherName"></h3>
+                <p class="subject" id="parentTeacherSubject"></p>
+                <p class="rating">Орташа рейтинг: <span id="parentAvgRating">⭐ 0 / 5</span></p>
+
+                <h4>Бағалау деңгейлері:</h4>
+                <ul id="levelRatings"></ul>
+
+                <h4>Соңғы пікірлер:</h4>
+                <ul id="parentCommentsList"></ul>
+
+                <canvas id="parentRatingChart" width="400" height="200"></canvas>
+            </div>
         </div>
     </div>
 
