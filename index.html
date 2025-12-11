@@ -3,35 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QR арқылы кіру</title>
+<title>Оқытушыларды бағалау</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
 
-<div class="container">
-    <h1>📱 QR кодты сканерлеңіз</h1>
-    <canvas id="qrcode"></canvas>
+<div class="container" id="mainContainer">
 
-    <div id="entryCard" class="hidden">
-        <a href="index.html?user=student1" class="entryBtn">Оқушы ретінде кіру</a>
-        <a href="index.html?user=parent1" class="entryBtn">Ата-ана ретінде кіру</a>
+    <!-- QR беті -->
+    <div id="qrCard">
+        <h1>📱 QR код арқылы кіру</h1>
+        <canvas id="qrcode"></canvas>
+
+        <div id="entryCard" class="hidden">
+            <a href="?user=student1" class="entryBtn">Оқушы ретінде кіру</a>
+            <a href="?user=parent1" class="entryBtn">Ата-ана ретінде кіру</a>
+        </div>
     </div>
+
 </div>
 
-<script>
-    const qrCanvas = document.getElementById("qrcode");
-    const entryCard = document.getElementById("entryCard");
-
-    const siteURL = window.location.href; // Сол сайтқа QR код жасау
-
-    QRCode.toCanvas(qrCanvas, siteURL, {width:200}, function(error){
-        if(error) console.error(error);
-        else {
-            entryCard.classList.remove("hidden"); // QR дайын → батырмалар көрсетіледі
-        }
-    });
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
