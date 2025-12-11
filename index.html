@@ -1,71 +1,37 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Кіру</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #f0f4f8;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        #entryCard {
-            display: none; /* Бастапқыда жасырын */
-            margin-top: 20px;
-        }
-        .entryBtn {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 25px;
-            background: #4ade80;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-        .entryBtn:hover {
-            background: #22c55e;
-        }
-        @media only screen and (max-width: 768px) {
-            #entryCard {
-                display: block; /* Мобильдіде көрінеді */
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR арқылы кіру</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h2>QR арқылы кіру</h2>
-        <canvas id="qrcode"></canvas>
 
-        <div id="entryCard">
-            <a href="?user=student1" class="entryBtn">Оқушы ретінде кіру</a>
-            <a href="?user=parent1" class="entryBtn">Ата-ана ретінде кіру</a>
-        </div>
+<div class="container">
+    <h1>📱 QR кодты сканерлеңіз</h1>
+    <canvas id="qrcode"></canvas>
+
+    <div id="entryCard" class="hidden">
+        <a href="index.html?user=student1" class="entryBtn">Оқушы ретінде кіру</a>
+        <a href="index.html?user=parent1" class="entryBtn">Ата-ана ретінде кіру</a>
     </div>
+</div>
 
-    <!-- QR код генерациясы үшін CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-    <script>
-        const qrCanvas = document.getElementById("qrcode");
-        const siteURL = window.location.origin + window.location.pathname; // Сол сайтқа бағыттайды
+<script>
+    const qrCanvas = document.getElementById("qrcode");
+    const entryCard = document.getElementById("entryCard");
 
-        // QR код жасау
-        QRCode.toCanvas(qrCanvas, siteURL, { width: 200 }, function(error){
-            if(error) console.error(error);
-            else console.log("QR коды дайын!");
-        });
-    </script>
+    const siteURL = window.location.href; // Сол сайтқа QR код жасау
+
+    QRCode.toCanvas(qrCanvas, siteURL, {width:200}, function(error){
+        if(error) console.error(error);
+        else {
+            entryCard.classList.remove("hidden"); // QR дайын → батырмалар көрсетіледі
+        }
+    });
+</script>
+
 </body>
 </html>
