@@ -5,80 +5,72 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Online Voting QR</title>
 <style>
-/* Базалық стиль */
 body{
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   min-height:100vh;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
-  color:#fff;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
   font-family:'Poppins', sans-serif;
   text-align:center;
   padding:20px;
+  color:#fff;
 }
-
-/* QR код контейнер */
+h1{font-size:2rem;margin-bottom:10px;}
+p{font-size:1.2rem;margin-bottom:30px;}
 #qrcode{
-  margin:40px 0;
+  background: rgba(255,255,255,0.2);
   padding:20px;
-  background: rgba(255,255,255,0.15);
-  border-radius:20px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  border-radius:25px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.25);
   transition: transform 0.3s, box-shadow 0.3s;
 }
-
-/* Hover эффект */
 #qrcode:hover{
   transform: scale(1.05);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+  box-shadow:0 25px 50px rgba(0,0,0,0.35);
 }
-
-/* Батырма стиль */
 button{
-  padding:18px 35px;
+  margin-top:30px;
+  padding:18px 40px;
   font-size:1.3rem;
   border:none;
-  border-radius:20px;
+  border-radius:25px;
   cursor:pointer;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.25);
   color:#fff;
-  transition: 0.3s;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  transition:0.3s;
+  box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
-
 button:hover{
-  background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.45);
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  box-shadow:0 12px 30px rgba(0,0,0,0.35);
 }
 </style>
 </head>
 <body>
 
 <h1>🗳 Онлайн дауыс беру</h1>
-<p>QR кодты сканерлеңіз немесе төмендегі батырманы басыңыз</p>
+<p>QR кодты сканерлеңіз немесе батырманы басыңыз</p>
 
-<div id="qrcode"></div>
+<!-- Canvas элементі QR код үшін -->
+<canvas id="qrcode" height="220" width="220" style="height:220px; width:220px;"></canvas>
 
 <button onclick="window.location.href='vote.html'">Сайтқа кіру</button>
 
-<!-- QRCode кітапханасы -->
+<!-- QR код кітапханасы -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 <script>
-  // QR кодқа сайт URL беру
-  const url = window.location.origin + "/vote.html";
-  QRCode.toCanvas(document.getElementById('qrcode'), url, {
-    width: 250,
-    color: {
-      dark: '#000000',  // QR код қара түс
-      light: '#ffffff'  // фон ақ
-    }
-  }, function (error) {
-    if (error) console.error(error);
-    console.log('QR код дайын!');
-  });
+// Canvas таңдау
+const canvas = document.getElementById('qrcode');
+// vote.html сілтемесін жасау
+const voteUrl = window.location.href.replace("index.html","vote.html");
+// QR код генерациясы
+QRCode.toCanvas(canvas, voteUrl, { width: 220, margin: 2 }, function (error) {
+  if (error) console.error(error)
+  else console.log('QR код дайын!');
+});
 </script>
 
 </body>
