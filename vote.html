@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Voting</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🗳 Онлайн Дауыс Беру</h1>
+<div id="timer">⏳ Уақыт: 30</div>
+
+<div class="candidates">
+  <button class="candidate-btn">Аян</button>
+  <button class="candidate-btn">Нұрбек</button>
+  <button class="candidate-btn">Айлин</button>
+  <button class="candidate-btn">Диас</button>
+  <button class="candidate-btn">Мадина</button>
+</div>
+
+<div id="meme-container">
+  <img id="meme" src="" alt="meme">
+</div>
+
+<div id="winner-screen">
+  <div id="winner-name"></div>
+  <img id="winner-meme" src="" alt="winner meme">
+</div>
+
+<div id="results"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

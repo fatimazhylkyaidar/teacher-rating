@@ -3,92 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Оқытушыларды бағалау</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<title>Online Voting QR</title>
+<style>
+/* Базалық стиль */
+body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  color:#fff;
+  font-family:'Poppins', sans-serif;
+  text-align:center;
+  padding:20px;
+}
+
+/* QR код контейнер */
+#qrcode{
+  margin:40px 0;
+  padding:20px;
+  background: rgba(255,255,255,0.15);
+  border-radius:20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Hover эффект */
+#qrcode:hover{
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+}
+
+/* Батырма стиль */
+button{
+  padding:18px 35px;
+  font-size:1.3rem;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background: rgba(255,255,255,0.2);
+  color:#fff;
+  transition: 0.3s;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+button:hover{
+  background: rgba(255,255,255,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+</style>
 </head>
 <body>
 
-<header>
-    <h1>📊 Оқытушыларды бағалау</h1>
-    <p class="subtitle">Әділ және заманауи жүйе</p>
-</header>
+<h1>🗳 Онлайн дауыс беру</h1>
+<p>QR кодты сканерлеңіз немесе төмендегі батырманы басыңыз</p>
 
-<div class="container">
+<div id="qrcode"></div>
 
-    <!-- 1-бет: QR код -->
-    <div class="card" id="qrCard">
-        <h2>QR кодты сканерлеңіз</h2>
-        <canvas id="qrcode"></canvas>
-        <div id="entryCard" class="hidden">
-            <a href="?user=student1" class="entryBtn">Оқушы</a>
-            <a href="?user=parent1" class="entryBtn">Ата-ана</a>
-        </div>
-    </div>
+<button onclick="window.location.href='vote.html'">Сайтқа кіру</button>
 
-    <!-- 2-бет: Student View -->
-    <div id="studentView" class="hidden">
-        <div class="card">
-            <h2>Оқытушыны бағалау</h2>
-            <label>Оқытушыны таңда:</label>
-            <select id="teacher"></select>
+<!-- QRCode кітапханасы -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script>
+  // QR кодқа сайт URL беру
+  const url = window.location.origin + "/vote.html";
+  QRCode.toCanvas(document.getElementById('qrcode'), url, {
+    width: 250,
+    color: {
+      dark: '#000000',  // QR код қара түс
+      light: '#ffffff'  // фон ақ
+    }
+  }, function (error) {
+    if (error) console.error(error);
+    console.log('QR код дайын!');
+  });
+</script>
 
-            <label>Сабақтың түсініктілігі:</label>
-            <input type="range" min="1" max="5" value="3" class="slider" id="clarity">
-
-            <label>Сабақ қызықтылығы:</label>
-            <input type="range" min="1" max="5" value="3" class="slider" id="interest">
-
-            <label>Мұғалімнің қолжетімділігі:</label>
-            <input type="range" min="1" max="5" value="3" class="slider" id="accessibility">
-
-            <label>Қатысу белсенділігі:</label>
-            <input type="range" min="1" max="5" value="3" class="slider" id="participation">
-
-            <div class="emoji-rating">
-                <h3>Сабақ әсері:</h3>
-                <div class="emojis">
-                    <span data-value="1">😡</span>
-                    <span data-value="2">😕</span>
-                    <span data-value="3">😐</span>
-                    <span data-value="4">😊</span>
-                    <span data-value="5">🤩</span>
-                </div>
-            </div>
-
-            <div class="comment-box">
-                <h3>Пікір қалдыру:</h3>
-                <textarea id="comment" placeholder="Пікіріңізді жазыңыз..."></textarea>
-            </div>
-
-            <button id="submit">Бағалау жіберу</button>
-        </div>
-    </div>
-
-    <!-- 3-бет: Parent View -->
-    <div id="parentView" class="hidden">
-        <div class="card">
-            <h2>Оқытушылар рейтингі</h2>
-            <select id="teacherParentSelect"></select>
-            <div class="teacher-profile">
-                <h3 id="parentTeacherName"></h3>
-                <p class="subject" id="parentTeacherSubject"></p>
-                <p class="rating">Орташа рейтинг: <span id="parentAvgRating">⭐ 0 / 5</span></p>
-
-                <h4>Бағалау деңгейлері:</h4>
-                <ul id="levelRatings"></ul>
-
-                <h4>Соңғы пікірлер:</h4>
-                <ul id="parentCommentsList"></ul>
-
-                <canvas id="parentRatingChart" width="400" height="200"></canvas>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
